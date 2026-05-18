@@ -165,7 +165,11 @@ This repo includes a static dashboard site for viewing the real agenda sample an
 python3 -m http.server 8000
 ```
 
-Then open <http://localhost:8000/site/>. The page loads `data/agenda_items.csv` by default, shows policy-area item counts, and lets you upload a reviewed `manual_segments.csv` file to switch the chart to minutes.
+Then open <http://localhost:8000/>. The page loads `data/agenda_items.csv` by default, shows policy-area item counts, and lets you upload a reviewed `manual_segments.csv` file to switch the chart to minutes.
+
+### GitHub Pages deployment
+
+GitHub Pages serves the root `index.html`, so the public dashboard URL is <https://tannerjurek.github.io/minneapolis-council/>. The legacy `site/index.html` file is only a redirect back to the root dashboard.
 
 ## Manual prototype commands
 
