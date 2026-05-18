@@ -148,36 +148,11 @@ Use a small, stable taxonomy first so charts are interpretable. Add subcategorie
 7. **Department dashboard:** time and outcomes by originating department.
 8. **Ward/neighborhood map:** count and duration of geographically tagged items.
 
-## Current real data sample
-
-The repo now includes the first real agenda-coded sample from the official marked agenda for the April 8, 2026 Minneapolis City Council adjourned meeting:
-
-- `data/meetings.csv` has the meeting-level source record.
-- `data/agenda_items.csv` has the substantive agenda item, action taken, and first-pass policy-area label.
-
-This is agenda-coded data, not time-segmented data. The site labels this state as agenda-coded mode so readers do not mistake item counts for meeting minutes. The next research step is to watch the linked meeting video and add item start/end timestamps to `data/manual_segments.csv`.
-
-## View the local site
-
-This repo includes a static dashboard site for viewing the real agenda sample and uploaded manual CSV files. From the repo root, run:
-
-```bash
-python3 -m http.server 8000
-```
-
-Then open <http://localhost:8000/>. The page loads `data/agenda_items.csv` by default, shows policy-area item counts, and lets you upload a reviewed `manual_segments.csv` file to switch the chart to minutes.
-
-### GitHub Pages deployment
-
-GitHub Pages serves the root `index.html`, so the public dashboard URL is <https://tannerjurek.github.io/minneapolis-council/>. The legacy `site/index.html` file is only a redirect back to the root dashboard.
-
 ## Manual prototype commands
 
 Run these commands after replacing the example rows with reviewed meeting data:
 
 ```bash
-python3 scripts/validate_agenda_items.py data/agenda_items.csv
-python3 scripts/summarize_agenda_items_by_policy.py data/agenda_items.csv --output outputs/policy_area_item_counts.csv
 python3 scripts/validate_segments.py data/manual_segments.example.csv
 python3 scripts/summarize_time_by_policy.py data/manual_segments.example.csv --output outputs/policy_area_minutes.csv
 python3 scripts/chart_policy_area_minutes.py outputs/policy_area_minutes.csv --output outputs/charts/policy_area_minutes.svg
