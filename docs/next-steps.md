@@ -25,12 +25,11 @@ The prototype is ready to automate only when all of these are true:
 ## First implementation tasks
 
 1. Replace the example rows in `data/meetings.example.csv` and `data/manual_segments.example.csv` with real reviewed data.
-2. Run `scripts/validate_agenda_items.py` to check agenda-coded rows before timestamping.
-3. Run `scripts/validate_segments.py` to check columns, timestamps, durations, confidence scores, and policy labels.
-4. Run `scripts/summarize_time_by_policy.py` to aggregate total minutes by `policy_area`.
-5. Run `scripts/chart_policy_area_minutes.py` to generate a static SVG chart from the summary.
-6. Update `docs/methodology.md` with meeting-selection and coding decisions from the manual review.
-7. Only after those work, automate LIMS extraction and transcript matching.
+2. Run `scripts/validate_segments.py` to check columns, timestamps, durations, confidence scores, and policy labels.
+3. Run `scripts/summarize_time_by_policy.py` to aggregate total minutes by `policy_area`.
+4. Run `scripts/chart_policy_area_minutes.py` to generate a static SVG chart from the summary.
+5. Update `docs/methodology.md` with meeting-selection and coding decisions from the manual review.
+6. Only after those work, automate LIMS extraction and transcript matching.
 
 ## Do not build yet
 
