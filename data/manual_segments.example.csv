@@ -1,0 +1,2 @@
+meeting_id,meeting_date,body_name,agenda_url,video_url,item_id,agenda_order,file_number,item_title,policy_area,start_time,end_time,duration_seconds,segmentation_method,confidence_score,reviewer_notes
+example-2026-01-01,2026-01-01,City Council,https://lims.minneapolismn.gov/example,https://www.youtube.com/example,example-item-1,1,2026-00001,Example agenda item,Housing and homelessness,00:05:12,00:12:45,453,manual,0.95,Replace this row with real reviewed data.
