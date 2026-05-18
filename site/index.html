@@ -3,23 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Minneapolis Council Time Dashboard</title>
+  <title>Minneapolis Council Meeting-Time Prototype</title>
   <style>
     :root {
       color-scheme: light;
-      --bg: #eef4ff;
-      --panel: #ffffff;
-      --panel-soft: #f8fbff;
-      --ink: #0f172a;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --ink: #111827;
       --muted: #64748b;
-      --line: #d9e5f6;
+      --line: #dbe3ef;
       --blue: #2563eb;
-      --blue-dark: #1e40af;
-      --cyan: #06b6d4;
+      --blue-dark: #1d4ed8;
       --green: #059669;
-      --amber: #d97706;
-      --red: #dc2626;
-      --shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+      --amber: #b45309;
     }
 
     * { box-sizing: border-box; }
@@ -27,340 +23,164 @@
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.26), transparent 24rem),
-        radial-gradient(circle at 85% 0%, rgba(37, 99, 235, 0.22), transparent 26rem),
-        var(--bg);
+      background: var(--bg);
       color: var(--ink);
       line-height: 1.5;
     }
 
-    a { color: var(--blue-dark); }
-
-    .shell {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 24px;
-    }
-
-    .hero {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 54%, #0891b2 100%);
-      border-radius: 28px;
-      box-shadow: var(--shadow);
+    header {
+      background: linear-gradient(135deg, #172554 0%, #2563eb 60%, #38bdf8 100%);
       color: white;
-      overflow: hidden;
-      padding: 42px;
-      position: relative;
+      padding: 56px 24px;
     }
 
-    .hero::after {
-      background: radial-gradient(circle, rgba(255,255,255,0.26), transparent 18rem);
-      content: "";
-      height: 28rem;
-      position: absolute;
-      right: -10rem;
-      top: -14rem;
-      width: 28rem;
-    }
-
-    .eyebrow {
-      align-items: center;
-      color: #bfdbfe;
-      display: inline-flex;
-      font-weight: 800;
-      gap: 10px;
-      letter-spacing: 0.08em;
-      margin: 0 0 18px;
-      text-transform: uppercase;
-    }
-
-    .eyebrow::before {
-      background: #22d3ee;
-      border-radius: 999px;
-      content: "";
-      height: 10px;
-      width: 10px;
+    header .wrap, main {
+      max-width: 1120px;
+      margin: 0 auto;
     }
 
     h1 {
-      font-size: clamp(2.4rem, 6vw, 5.8rem);
-      letter-spacing: -0.06em;
-      line-height: 0.95;
-      margin: 0 0 22px;
-      max-width: 940px;
-      position: relative;
-      z-index: 1;
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
     }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 1.25rem;
+    }
+
+    p { margin: 0 0 16px; }
 
     .lede {
-      color: #dbeafe;
-      font-size: 1.18rem;
-      margin: 0;
       max-width: 760px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 28px;
-      position: relative;
-      z-index: 1;
-    }
-
-    button, .button, .file-label {
-      align-items: center;
-      border: 0;
-      border-radius: 999px;
-      cursor: pointer;
-      display: inline-flex;
-      font: inherit;
-      font-weight: 800;
-      gap: 8px;
-      padding: 12px 18px;
-      text-decoration: none;
-      transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
-    }
-
-    button:hover, .button:hover, .file-label:hover {
-      transform: translateY(-1px);
-    }
-
-    .primary {
-      background: white;
-      color: #172554;
-      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.20);
-    }
-
-    .secondary {
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.35);
-      color: white;
+      color: #dbeafe;
+      font-size: 1.15rem;
     }
 
     main {
-      display: grid;
-      gap: 22px;
-      margin-top: 22px;
+      padding: 28px 24px 56px;
     }
 
-    .dashboard-grid {
+    .grid {
       display: grid;
-      gap: 22px;
-      grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
+      grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+      gap: 24px;
+      align-items: start;
     }
 
     .card {
-      background: rgba(255,255,255,0.92);
+      background: var(--card);
       border: 1px solid var(--line);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
+      border-radius: 18px;
+      box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
       padding: 22px;
-    }
-
-    .card-header {
-      align-items: start;
-      display: flex;
-      gap: 16px;
-      justify-content: space-between;
-      margin-bottom: 18px;
-    }
-
-    h2, h3 {
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin: 0;
-    }
-
-    h2 { font-size: 1.45rem; }
-    h3 { font-size: 1.05rem; }
-
-    .subtle {
-      color: var(--muted);
-      margin: 6px 0 0;
     }
 
     .toolbar {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 16px;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 18px;
     }
 
-    .tool-button, .file-label {
+    button, .file-label {
+      border: 0;
+      border-radius: 999px;
       background: var(--blue);
       color: white;
-      padding: 10px 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      font: inherit;
+      font-weight: 700;
+      gap: 8px;
+      padding: 10px 16px;
+      text-decoration: none;
     }
 
-    .tool-button:hover, .file-label:hover { background: var(--blue-dark); }
+    button:hover, .file-label:hover { background: var(--blue-dark); }
     input[type="file"] { display: none; }
 
-    .status-pill {
-      background: #ecfdf5;
-      border: 1px solid #bbf7d0;
-      border-radius: 999px;
-      color: #047857;
-      display: inline-flex;
-      font-size: 0.86rem;
-      font-weight: 800;
-      padding: 7px 11px;
-      white-space: nowrap;
+    .status {
+      color: var(--muted);
+      font-size: 0.95rem;
     }
 
     .metrics {
       display: grid;
-      gap: 12px;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      margin-bottom: 18px;
+      gap: 12px;
+      margin-bottom: 20px;
     }
 
     .metric {
-      background: var(--panel-soft);
       border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 15px;
+      border-radius: 16px;
+      padding: 14px;
     }
 
     .metric strong {
       display: block;
-      font-size: 2rem;
-      letter-spacing: -0.04em;
-      line-height: 1;
+      font-size: 1.8rem;
+      line-height: 1.1;
     }
 
     .metric span {
       color: var(--muted);
-      display: block;
-      font-size: 0.88rem;
-      margin-top: 6px;
-    }
-
-    .bar-list {
-      display: grid;
-      gap: 10px;
+      font-size: 0.9rem;
     }
 
     .bar-row {
-      background: #f8fafc;
-      border: 1px solid #e5edf8;
-      border-radius: 16px;
       display: grid;
+      grid-template-columns: minmax(180px, 260px) 1fr minmax(120px, auto);
       gap: 12px;
-      grid-template-columns: minmax(170px, 260px) 1fr minmax(160px, auto);
-      padding: 12px;
       align-items: center;
+      padding: 11px 0;
+      border-top: 1px solid #eef2f7;
     }
 
-    .bar-label { font-weight: 850; }
+    .bar-row:first-child { border-top: 0; }
+
+    .bar-label { font-weight: 700; }
 
     .bar-track {
-      background: #dbeafe;
+      background: #e0ecff;
       border-radius: 999px;
-      height: 18px;
+      height: 24px;
       overflow: hidden;
     }
 
     .bar-fill {
-      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      background: linear-gradient(90deg, var(--blue), #38bdf8);
       border-radius: inherit;
       height: 100%;
-      min-width: 4px;
+      min-width: 3px;
     }
 
     .bar-value {
       color: var(--muted);
       font-variant-numeric: tabular-nums;
-      font-weight: 750;
       text-align: right;
       white-space: nowrap;
-    }
-
-    .insight-stack {
-      display: grid;
-      gap: 14px;
-    }
-
-    .insight {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 16px;
-    }
-
-    .insight strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .warning {
-      background: #fffbeb;
-      border-color: #fde68a;
-      color: #78350f;
-    }
-
-    .success {
-      background: #ecfdf5;
-      border-color: #bbf7d0;
-      color: #064e3b;
     }
 
     table {
       border-collapse: collapse;
       width: 100%;
+      font-size: 0.95rem;
     }
 
     th, td {
-      border-bottom: 1px solid #edf2f7;
-      padding: 12px 10px;
+      border-bottom: 1px solid #eef2f7;
+      padding: 10px 8px;
       text-align: left;
       vertical-align: top;
     }
 
-    th {
-      color: var(--muted);
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .tag {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 999px;
-      color: #1d4ed8;
-      display: inline-flex;
-      font-size: 0.82rem;
-      font-weight: 800;
-      padding: 4px 9px;
-    }
-
-    .steps {
-      display: grid;
-      gap: 12px;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .step {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 18px;
-    }
-
-    .step-number {
-      align-items: center;
-      background: #dbeafe;
-      border-radius: 999px;
-      color: #1e40af;
-      display: inline-flex;
-      font-weight: 900;
-      height: 32px;
-      justify-content: center;
-      margin-bottom: 12px;
-      width: 32px;
-    }
+    th { color: var(--muted); font-size: 0.85rem; text-transform: uppercase; }
 
     code {
       background: #eef2ff;
@@ -369,140 +189,78 @@
       padding: 2px 6px;
     }
 
-    .empty {
-      color: var(--muted);
-      padding: 20px 0;
+    ol { padding-left: 1.25rem; }
+    li + li { margin-top: 8px; }
+
+    .note {
+      border-left: 4px solid var(--amber);
+      background: #fffbeb;
+      border-radius: 12px;
+      color: #78350f;
+      padding: 14px;
     }
 
-    @media (max-width: 900px) {
-      .dashboard-grid, .steps, .metrics, .bar-row { grid-template-columns: 1fr; }
-      .hero { padding: 30px; }
+    @media (max-width: 820px) {
+      .grid, .metrics, .bar-row { grid-template-columns: 1fr; }
       .bar-value { text-align: left; }
     }
   </style>
 </head>
 <body>
-  <div class="shell">
-    <header class="hero">
-      <p class="eyebrow">Manual prototype</p>
-      <h1>Minneapolis Council meeting-time dashboard</h1>
-      <p class="lede">A working browser dashboard for exploring agenda-coded City Council data now, and minute-by-minute meeting segments once reviewed timestamps are added.</p>
-      <div class="hero-actions">
-        <button class="primary" id="hero-load" type="button">Load real agenda sample</button>
-        <a class="button secondary" href="../data/agenda_items.csv">Download seed CSV</a>
-      </div>
-    </header>
+  <header>
+    <div class="wrap">
+      <h1>Minneapolis Council Meeting-Time Prototype</h1>
+      <p class="lede">A local, static preview for exploring real agenda-coded data now and manually segmented meeting time once timestamps are added.</p>
+    </div>
+  </header>
 
-    <main>
-      <section class="dashboard-grid">
-        <div class="card">
-          <div class="card-header">
-            <div>
-              <h2 id="chart-title">Policy areas</h2>
-              <p class="subtle" id="source-label">Load data to see the chart.</p>
-            </div>
-            <span class="status-pill" id="status">Ready</span>
-          </div>
-
-          <div class="toolbar">
-            <button class="tool-button" id="load-example" type="button">Load real agenda sample</button>
-            <label class="file-label" for="csv-file">Upload CSV</label>
-            <input id="csv-file" type="file" accept=".csv,text/csv">
-          </div>
-
-          <div class="metrics" aria-label="Summary metrics">
-            <div class="metric"><strong id="metric-items">0</strong><span>agenda items</span></div>
-            <div class="metric"><strong id="metric-measure">0</strong><span id="metric-measure-label">coded items</span></div>
-            <div class="metric"><strong id="metric-areas">0</strong><span>policy areas</span></div>
-          </div>
-
-          <div id="chart" class="bar-list" aria-live="polite"><p class="empty">No data loaded yet.</p></div>
+  <main>
+    <div class="grid">
+      <section class="card" aria-labelledby="chart-title">
+        <div class="toolbar">
+          <button id="load-example" type="button">Load real agenda sample</button>
+          <label class="file-label" for="csv-file">Upload manual CSV</label>
+          <input id="csv-file" type="file" accept=".csv,text/csv">
+          <span id="status" class="status">Waiting for data…</span>
         </div>
 
-        <aside class="card">
-          <div class="card-header">
-            <div>
-              <h2>What you are seeing</h2>
-              <p class="subtle">The dashboard starts with a real agenda-coded item.</p>
-            </div>
-          </div>
-          <div class="insight-stack">
-            <div class="insight success">
-              <strong>Real seed data</strong>
-              The included sample is from the April 8, 2026 Minneapolis City Council marked agenda.
-            </div>
-            <div class="insight warning">
-              <strong>Time analysis pending</strong>
-              The current real sample is agenda-coded. Once video timestamps are added, this same page switches from item counts to minutes.
-            </div>
-            <div class="insight">
-              <strong>Run locally</strong>
-              Start a server with <code>python3 -m http.server 8000</code>, then open <code>http://localhost:8000/site/</code>.
-            </div>
-          </div>
-        </aside>
+        <div class="metrics" aria-label="Summary metrics">
+          <div class="metric"><strong id="metric-items">0</strong><span>agenda item(s)</span></div>
+          <div class="metric"><strong id="metric-measure">0</strong><span id="metric-measure-label">total item(s)</span></div>
+          <div class="metric"><strong id="metric-areas">0</strong><span>policy area(s)</span></div>
+        </div>
+
+        <h2 id="chart-title">Policy areas</h2>
+        <div id="chart" aria-live="polite"></div>
       </section>
 
-      <section class="card">
-        <div class="card-header">
-          <div>
-            <h2>Agenda item detail</h2>
-            <p class="subtle">Rows from the loaded CSV, linked to policy-area coding and review status.</p>
-          </div>
-        </div>
-        <div id="detail-table"><p class="empty">No rows loaded yet.</p></div>
-      </section>
+      <aside class="card">
+        <h2>How to view this site</h2>
+        <ol>
+          <li>From the repo root, run <code>python3 -m http.server 8000</code>.</li>
+          <li>Open <code>http://localhost:8000/site/</code> in your browser.</li>
+          <li>Click <strong>Load real agenda sample</strong> or upload your reviewed <code>manual_segments.csv</code>.</li>
+        </ol>
+        <p class="note">The included real agenda sample has one substantive item. Add timestamped meeting segments to switch the chart from item counts to minutes.</p>
+      </aside>
+    </div>
 
-      <section class="steps">
-        <div class="step">
-          <span class="step-number">1</span>
-          <h3>Collect agenda items</h3>
-          <p class="subtle">Add real agenda rows to <code>data/agenda_items.csv</code> with action and policy-area labels.</p>
-        </div>
-        <div class="step">
-          <span class="step-number">2</span>
-          <h3>Segment meeting video</h3>
-          <p class="subtle">Watch the meeting and add start/end timestamps to a reviewed <code>manual_segments.csv</code>.</p>
-        </div>
-        <div class="step">
-          <span class="step-number">3</span>
-          <h3>Compare priorities</h3>
-          <p class="subtle">Upload the timestamped CSV to convert agenda counts into minutes by policy area.</p>
-        </div>
-      </section>
-    </main>
-  </div>
+    <section class="card" style="margin-top: 24px;" aria-labelledby="table-title">
+      <h2 id="table-title">Policy-area summary table</h2>
+      <div id="table"></div>
+    </section>
+  </main>
 
   <script>
-    const defaultPath = '../data/agenda_items.csv';
-    const embeddedRows = [
-      {
-        meeting_id: 'council-2026-04-08',
-        meeting_date: '2026-04-08',
-        body_name: 'Minneapolis City Council',
-        source_url: 'https://lims.minneapolismn.gov/MarkedAgenda/Council/5892',
-        item_id: 'council-2026-04-08-2026-00351',
-        agenda_section: 'New Business',
-        agenda_order: '1',
-        file_number: '2026-00351',
-        item_title: 'Alternative municipal revenues: Guidehouse presentation',
-        item_description: 'Receiving and filing a report from Guidehouse, Inc. related to alternative municipal revenue sources.',
-        policy_area: 'Budget, taxes, procurement, and finance',
-        action_taken: 'Received and filed',
-        coding_status: 'agenda_coded',
-        reviewer_notes: 'Real agenda item captured from official marked agenda; video timestamp segmentation is still pending.',
-      },
-    ];
+    const examplePath = '../data/agenda_items.csv';
 
     const statusEl = document.querySelector('#status');
     const chartEl = document.querySelector('#chart');
-    const detailTableEl = document.querySelector('#detail-table');
-    const sourceLabelEl = document.querySelector('#source-label');
+    const tableEl = document.querySelector('#table');
     const metricItems = document.querySelector('#metric-items');
     const metricMeasure = document.querySelector('#metric-measure');
     const metricMeasureLabel = document.querySelector('#metric-measure-label');
     const metricAreas = document.querySelector('#metric-areas');
-    const chartTitle = document.querySelector('#chart-title');
 
     function parseCsv(text) {
       const rows = [];
@@ -578,8 +336,7 @@
       };
     }
 
-    function render(rows, sourceLabel) {
-      const summary = summarize(rows);
+    function render(summary, sourceLabel) {
       const summaryRows = summary.rows;
       const totalItems = summaryRows.reduce((sum, row) => sum + row.itemCount, 0);
       const totalSeconds = summaryRows.reduce((sum, row) => sum + row.totalSeconds, 0);
@@ -587,15 +344,14 @@
 
       metricItems.textContent = totalItems.toLocaleString();
       metricMeasure.textContent = summary.hasDuration ? (totalSeconds / 60).toFixed(2) : totalItems.toLocaleString();
-      metricMeasureLabel.textContent = summary.hasDuration ? 'total minutes' : 'coded items';
+      metricMeasureLabel.textContent = summary.hasDuration ? 'total minute(s)' : 'agenda-coded item(s)';
       metricAreas.textContent = summaryRows.length.toLocaleString();
-      statusEl.textContent = summary.hasDuration ? 'Time data loaded' : 'Agenda data loaded';
-      sourceLabelEl.textContent = `Source: ${sourceLabel}`;
-      chartTitle.textContent = summary.hasDuration ? 'Minutes by policy area' : 'Agenda items by policy area';
+      statusEl.textContent = `Loaded ${sourceLabel}`;
+      document.querySelector('#chart-title').textContent = summary.hasDuration ? 'Minutes by policy area' : 'Agenda items by policy area';
 
       if (summaryRows.length === 0) {
-        chartEl.innerHTML = '<p class="empty">No valid rows found.</p>';
-        detailTableEl.innerHTML = '<p class="empty">No valid rows found.</p>';
+        chartEl.innerHTML = '<p>No valid rows found.</p>';
+        tableEl.innerHTML = '<p>No valid rows found.</p>';
         return;
       }
 
@@ -604,7 +360,7 @@
         const width = maxValue === 0 ? 0 : (value / maxValue) * 100;
         const valueLabel = summary.hasDuration
           ? `${row.totalMinutes.toFixed(2)} min · ${row.itemCount} item(s)`
-          : `${row.itemCount} coded item(s)`;
+          : `${row.itemCount} item(s) · timestamps pending`;
         return `
           <div class="bar-row">
             <div class="bar-label">${escapeHtml(row.policyArea)}</div>
@@ -614,43 +370,25 @@
         `;
       }).join('');
 
-      renderDetailTable(rows, summary.hasDuration);
-    }
-
-    function renderDetailTable(rows, hasDuration) {
-      detailTableEl.innerHTML = `
+      const timingHeaders = summary.hasDuration ? '<th>Total seconds</th><th>Total minutes</th>' : '<th>Status</th>';
+      tableEl.innerHTML = `
         <table>
           <thead>
-            <tr>
-              <th>Date</th>
-              <th>Item</th>
-              <th>Policy area</th>
-              <th>${hasDuration ? 'Duration' : 'Status'}</th>
-              <th>Action</th>
-            </tr>
+            <tr><th>Policy area</th><th>Items</th>${timingHeaders}</tr>
           </thead>
           <tbody>
-            ${rows.map(row => `
+            ${summaryRows.map(row => `
               <tr>
-                <td>${escapeHtml(row.meeting_date || 'Unknown')}</td>
-                <td>
-                  <strong>${escapeHtml(row.item_title || row.title || row.item_id || 'Untitled')}</strong><br>
-                  <span class="subtle">${escapeHtml(row.file_number || row.item_id || '')}</span>
-                </td>
-                <td><span class="tag">${escapeHtml(row.policy_area || 'Other / unclear')}</span></td>
-                <td>${hasDuration ? `${formatMinutes(row.duration_seconds)} min` : escapeHtml(row.coding_status || 'timestamps pending')}</td>
-                <td>${escapeHtml(row.action_taken || row.vote_result || 'Pending')}</td>
+                <td>${escapeHtml(row.policyArea)}</td>
+                <td>${row.itemCount}</td>
+                ${summary.hasDuration
+                  ? `<td>${row.totalSeconds}</td><td>${row.totalMinutes.toFixed(2)}</td>`
+                  : '<td>Video timestamps pending</td>'}
               </tr>
             `).join('')}
           </tbody>
         </table>
       `;
-    }
-
-    function formatMinutes(seconds) {
-      const parsed = Number.parseInt(seconds, 10);
-      if (!Number.isFinite(parsed)) return '0.00';
-      return (parsed / 60).toFixed(2);
     }
 
     function escapeHtml(value) {
@@ -663,20 +401,20 @@
       }[char]));
     }
 
-    async function loadDefault() {
-      statusEl.textContent = 'Loading…';
-      try {
-        const response = await fetch(defaultPath);
-        if (!response.ok) throw new Error(`Could not load ${defaultPath}`);
-        const text = await response.text();
-        render(parseCsv(text), defaultPath);
-      } catch (error) {
-        render(embeddedRows, 'embedded real agenda sample');
-      }
+    async function loadExample() {
+      statusEl.textContent = 'Loading real agenda sample…';
+      const response = await fetch(examplePath);
+      if (!response.ok) throw new Error(`Could not load ${examplePath}`);
+      const text = await response.text();
+      render(summarize(parseCsv(text)), examplePath);
     }
 
-    document.querySelector('#load-example').addEventListener('click', loadDefault);
-    document.querySelector('#hero-load').addEventListener('click', loadDefault);
+    document.querySelector('#load-example').addEventListener('click', () => {
+      loadExample().catch(error => {
+        statusEl.textContent = error.message;
+        chartEl.innerHTML = `<p>${escapeHtml(error.message)}</p>`;
+      });
+    });
 
     document.querySelector('#csv-file').addEventListener('change', event => {
       const file = event.target.files[0];
@@ -684,16 +422,18 @@
       const reader = new FileReader();
       reader.addEventListener('load', () => {
         try {
-          render(parseCsv(reader.result), file.name);
+          render(summarize(parseCsv(reader.result)), file.name);
         } catch (error) {
           statusEl.textContent = error.message;
-          chartEl.innerHTML = `<p class="empty">${escapeHtml(error.message)}</p>`;
+          chartEl.innerHTML = `<p>${escapeHtml(error.message)}</p>`;
         }
       });
       reader.readAsText(file);
     });
 
-    loadDefault();
+    loadExample().catch(() => {
+      statusEl.textContent = 'Run python3 -m http.server 8000 from the repo root, then open /site/.';
+    });
   </script>
 </body>
 </html>
