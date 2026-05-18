@@ -1,0 +1,2 @@
+meeting_id,meeting_date,body_name,committee_name,agenda_url,marked_agenda_url,proceedings_url,video_url,video_duration_seconds,has_captions,has_video_chapters,notes
+council-2026-04-08,2026-04-08,Minneapolis City Council,,https://lims.minneapolismn.gov/Agenda/Council/5892,https://lims.minneapolismn.gov/MarkedAgenda/Council/5892,,https://www.youtube.com/user/cityofminneapolis,,true,unknown,"Real seed meeting from official marked agenda; specific video URL and item timestamps still need manual review."
