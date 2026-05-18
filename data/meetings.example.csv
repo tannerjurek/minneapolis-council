@@ -1,0 +1,2 @@
+meeting_id,meeting_date,body_name,committee_name,agenda_url,marked_agenda_url,proceedings_url,video_url,video_duration_seconds,has_captions,has_video_chapters,notes
+example-2026-01-01,2026-01-01,City Council,,https://lims.minneapolismn.gov/example,https://lims.minneapolismn.gov/example/marked-agenda,https://lims.minneapolismn.gov/example/proceedings,https://www.youtube.com/example,7200,true,false,Replace this row with real reviewed meeting metadata.
